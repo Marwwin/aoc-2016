@@ -7,7 +7,7 @@
 
 (defn solve []
   (let [input-string (->
-                      (slurp "./src/aoc_2016/days/input.txt")
+                      (slurp "./src/aoc_2016/days/day1_input.txt")
                       (str/trim)
                       (str/split #", "))
         instructions    (map (fn [s] [(subs s 0 1) (subs s 1)]) input-string)
