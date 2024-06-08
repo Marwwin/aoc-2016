@@ -1,6 +1,7 @@
 (ns aoc-2016.days.day1
   (:require [clojure.string :as str]
-            [clojure.set :as set]))
+            [clojure.set :as set]
+            [aoc-2016.aoc-utils :as utils]))
 
 (declare part1 part2 new-dir move manhattan)
 
@@ -16,7 +17,7 @@
 
 (defn part1 [[instruction & remaining] pos]
   (if (nil? instruction)
-    (manhattan pos {:x 0 :y 0})
+    (utils/manhattan-2d pos {:x 0 :y 0})
     (recur remaining (move instruction pos))))
 
 (defn inclusive-range [start end]
@@ -39,7 +40,7 @@
     (if (not-empty? intersection)
       (let [v (first intersection)
             m {:x (first v) :y (second v)}]
-        (manhattan m {:x 0 :y 0}))
+        (utils/manhattan-2d m {:x 0 :y 0}))
       (recur remaining new-pos (set/union new-visited visited)))))
 
 (defn move [[turn amount] {:keys [x y direction]}]
@@ -63,10 +64,5 @@
           "right" "down"
           "down" "left"
           "left" "up")))
-
-(defn manhattan [vec1  vec2]
-  (+
-   (Math/abs (- (vec2 :x) (vec1 :x)))
-   (Math/abs (- (vec2 :y) (vec1 :y)))))
 
 (solve)
