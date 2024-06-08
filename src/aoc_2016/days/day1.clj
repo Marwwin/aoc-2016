@@ -12,7 +12,7 @@
         instructions    (map (fn [s] [(subs s 0 1) (subs s 1)]) input-string)
         p1 (part1 instructions {:x 0 :y 0 :direction "up"})
         p2 (part2 instructions {:x 0 :y 0 :direction "up"} #{})]
-    (str p1 p2)))
+    {:part1 p1 :part2 p2}))
 
 (defn part1 [[instruction & remaining] pos]
   (if (nil? instruction)
@@ -26,7 +26,6 @@
 
 (defn- add-visited [pos new-pos]
   (let [news (cond
-               ; This is off by one
                (= (pos :x) (new-pos :x)) (map (fn [y] [(pos :x) y]) (inclusive-range (pos :y) (new-pos :y)))
                (= (pos :y) (new-pos :y)) (map (fn [x] [x (pos :y)]) (inclusive-range (pos :x) (new-pos :x))))]
     (set news)))
