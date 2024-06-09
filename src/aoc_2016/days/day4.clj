@@ -20,7 +20,8 @@
             input
             (map north-p)
             (filter (fn [room] (string/includes? (room :name) "north")))
-            )]
+            (first)
+            (:id))]
 
     {:part1 p1 :part2 p2}))
 
