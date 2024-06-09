@@ -1,7 +1,8 @@
-(ns aoc-2016.days.day
-  (:require [clojure.string :as str]))
+(ns aoc-2016.days.day2
+  (:require [clojure.string :as str])
+  (:require [aoc-2016.aoc-utils :as utils]))
 
-(declare walk  move)
+(declare walk move)
 
 (def part1-keypad [[1 2 3]
                    [4 5 6]
@@ -14,9 +15,7 @@
                    [nil nil \D  nil  nil]])
 
 (defn solve []
-  (let [data (->
-              (slurp "./src/aoc_2016/days/day2_input.txt")
-              (str/split-lines))
+  (let [data (utils/load-input "day2")
         p1 (walk (map seq data) {:x 1 :y 1} part1-keypad  "")
         p2 (walk (map seq data) {:x 0 :y 2} part2-keypad  "")]
     {:part1 p1 :part2 p2}))
@@ -31,12 +30,15 @@
 (defn move [position [instr & remaining] keypad]
   (if (nil? instr)
     position
-    (let [temp-position (case instr
-                          \L {:x (dec (position :x)) :y (position :y)}
-                          \R {:x (inc (position :x)) :y (position :y)}
-                          \U {:x (position :x) :y (dec (position :y))}
-                          \D {:x (position :x) :y (inc (position :y))})
-          new-position (if (nil? (get-in keypad [(temp-position :y) (temp-position :x)]))
+    (let [temp-position
+          (case instr
+            \L {:x (dec (position :x)) :y (position :y)}
+            \R {:x (inc (position :x)) :y (position :y)}
+            \U {:x (position :x) :y (dec (position :y))}
+            \D {:x (position :x) :y (inc (position :y))})
+          new-position (if (nil? (get-in
+                                  keypad
+                                  [(temp-position :y) (temp-position :x)]))
                          position
                          temp-position)]
       (recur new-position remaining keypad))))
