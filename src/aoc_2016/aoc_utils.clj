@@ -6,6 +6,12 @@
       (str/trim)
       (str/split-lines)))
 
+(defn most-common [coll]
+  (apply max-key val (frequencies coll)))
+
+(defn least-common [coll]
+  (apply min-key val (frequencies coll)))
+
 (defn manhattan-2d
   [vec1  vec2]
   (+
