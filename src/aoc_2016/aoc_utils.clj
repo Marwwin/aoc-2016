@@ -6,6 +6,18 @@
       (str/trim)
       (str/split-lines)))
 
+(defn get-odds [coll]
+  (->> coll
+       (map-indexed vector)
+       (filter (fn [[idx _]] (odd? idx)))
+       (map second)))
+
+(defn get-evens [coll]
+  (->> coll
+       (map-indexed vector)
+       (filter (fn [[idx _]] (even? idx)))
+       (map second)))
+
 (defn most-common [coll]
   (apply max-key val (frequencies coll)))
 
